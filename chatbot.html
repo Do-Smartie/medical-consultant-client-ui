@@ -9,7 +9,8 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-image: url('https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8yNV9zaW1wbGVfM2RfaWxsdXN0cmF0aW9uX29mX2FfcmVjb3Zlcnlfcm9vbV93aV80ZjhkNDIwNC02N2I4LTQwMDQtYTBlNy05YjljMjIyMzE2ZGVfMS5qcGc.jpg');
+      /* background-image: url('https://www.shutterstock.com/image-photo/fresh-herbs-garden-wooden-olive-600nw-1296916552.jpg'); */
+      background-image: url('assets/ayurveda.jpeg');
       background-size: cover;
     }
     .container {
@@ -73,7 +74,7 @@
   <div class="container">
     <div class="chat-container" id="chatContainer"></div>
     <form id="chatForm">
-      <input type="text" id="userInput" placeholder="Consult AI doctor...">
+      <input type="text" id="userInput" placeholder="Consult Home remedicies..">
       <input type="submit" value="Send">
     </form>
     <button id="logout" name="Log out">Log out</button>
@@ -93,7 +94,7 @@
       if (userMessage === "") return;
 
       appendMessage(userMessage, "user-message");
-      fetch("/api/chatbot", {
+      fetch("http://127.0.0.1:5000/chatbot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -102,8 +103,16 @@
       })
       .then(response => response.json())
       .then(data => {
-        const botMessage = data.message;
-        appendMessage(botMessage, "bot-message");
+        console.log(data["error"]);
+        if (data["error"]!=undefined) {
+          const botMessage = data["error"];
+          appendMessage(botMessage, "bot-message");
+        }
+        else {
+          for (var i = 0; i < data.length; i++) {
+        appendMessage(data[i], "bot-message");
+        }
+        }
       })
       .catch(error => {
         console.error("Error:", error);
