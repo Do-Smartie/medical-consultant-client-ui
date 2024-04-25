@@ -74,7 +74,6 @@
       const diagnosis = document.getElementById("diagnosis").value;
       // Call Flask API endpoint for registration
       // remove this line just for routing
-      window.location.href = "login.html"
       fetch("http://127.0.0.1:5000/register", {
         method: "POST",
         headers: {
