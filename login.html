@@ -77,7 +77,7 @@
         if(data["error"] != 'Invalid User') {
           localStorage.setItem('email', data['email']);
           localStorage.setItem('salt', data['salt']);
-           window.location.href = "chatbot.html";
+          window.location.href = "chatbot.html";
         }
         else {
             console.log("Api Failed")
