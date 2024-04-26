@@ -62,24 +62,30 @@
   <script>
     document.getElementById("loginForm").addEventListener("submit", function(event) {
       event.preventDefault();
-      const username = document.getElementById("username").value;
+      const email = document.getElementById("username").value;
       const password = document.getElementById("password").value;
-      // Call Flask API endpoint for authentication
+      console.log("Api calling ...")
       fetch("http://127.0.0.1:5000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
       })
-      .then(response => {
-        if (response.ok) {
-          window.location.href = "chatbot.html"; // Redirect to dashboard if authentication is successful
-        } else {
-          alert("Invalid username or password. Please try again.");
+      .then(response =>  response.json())
+      .then(data => {
+        if(data["error"] != 'Invalid User') {
+          localStorage.setItem('email', data['email']);
+          localStorage.setItem('salt', data['salt']);
+           window.location.href = "chatbot.html";
         }
-      })
+        else {
+            console.log("Api Failed")
+            alert("Invalid username or password. Please try again.");
+           }
+        })
       .catch(error => {
+        cconsole.log("Catched error...")
         console.error("Error:", error);
       });
     });

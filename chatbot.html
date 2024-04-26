@@ -70,23 +70,20 @@
     }
   </style>
 </head>
-<body>
+<body onload="routePage()">
   <div class="container">
     <div class="chat-container" id="chatContainer"></div>
     <form id="chatForm">
       <input type="text" id="userInput" placeholder="Consult Home remedicies..">
       <input type="submit" value="Send">
     </form>
-    <button id="logout" name="Log out">Log out</button>
+    <button id="logout" name="Log out" onclick="logout()">Log out</button>
   </div>
 
   <script>
     const chatContainer = document.getElementById("chatContainer");
     const chatForm = document.getElementById("chatForm");
     const userInput = document.getElementById("userInput");
-    document.getElementById("logout").addEventListener("click", function() {
-      window.location.href = "login.html";
-    });
 
     chatForm.addEventListener("submit", function(event) {
       event.preventDefault();
@@ -97,7 +94,9 @@
       fetch("http://127.0.0.1:5000/chatbot", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "email": localStorage.getItem("email"),
+          "salt": localStorage.getItem("salt")
         },
         body: JSON.stringify({ message: userMessage })
       })
@@ -106,11 +105,16 @@
         console.log(data["error"]);
         if (data["error"]!=undefined) {
           const botMessage = data["error"];
-          appendMessage(botMessage, "bot-message");
+          if (botMessage == "Invalid User") {
+            alert("Invalid user");
+          }
+          else {
+            appendMessage(botMessage, "bot-message");
+          }
         }
         else {
           for (var i = 0; i < data.length; i++) {
-        appendMessage(data[i], "bot-message");
+            appendMessage(data[i], "bot-message");
         }
         }
       })
@@ -119,6 +123,28 @@
       });
       userInput.value = "";
     });
+
+    function routePage() {
+      if (localStorage.getItem('email') == null || localStorage.getItem('salt') == null) {
+        localStorage.clear();
+        window.location.href = "login.html";
+      }
+    }
+
+    function logout() {
+      fetch("http://127.0.0.1:5000/logout", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "email": localStorage.getItem('email')
+        }
+      })
+      .then(response => response.json)
+      .then(data => {
+        localStorage.clear();
+        window.location.href = "login.html";
+      })
+    } 
 
 
     function appendMessage(message, className) {
