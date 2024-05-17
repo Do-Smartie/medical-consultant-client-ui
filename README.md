@@ -1,7 +1,5 @@
 # Medical-consultant-client-ui
 
-This repository contains the frontend files for the medical consultant application.
-
 ## Files
 
 1. `assets`: Directory containing assets like images
