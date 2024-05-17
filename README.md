@@ -1,4 +1,4 @@
-# Frontend Repository
+# Medical-consultant-client-ui
 
 This repository contains the frontend files for the medical consultant application.
 
