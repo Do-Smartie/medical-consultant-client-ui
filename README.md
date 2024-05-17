@@ -19,10 +19,6 @@ You can open the HTML files in any web browser to view the corresponding pages. 
 
 Contributions are welcome! If you'd like to contribute to the frontend of the medical consultant application, please fork the repository, make your changes, and submit a pull request.
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Contact
 
 If you have any questions or suggestions, please feel free to open an issue in this repository.
