@@ -4,7 +4,7 @@ This repository contains the frontend files for the medical consultant applicati
 
 ## Files
 
-1. `assets`: Directory containing assets like images, stylesheets, or JavaScript files.
+1. `assets`: Directory containing assets like images
 2. `chatbot.html`: HTML file for the chatbot interface.
 3. `login.html`: HTML file for the login page.
 4. `registration.html`: HTML file for the registration page.
